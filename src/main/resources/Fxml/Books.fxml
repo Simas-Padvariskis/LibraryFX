@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="700.0" prefWidth="860.0" styleClass="clients_container" stylesheets="@../Styles/authors.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pamokafx2.Controllers.BooksController">
+    <Text layoutX="398.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Knygos" wrappingWidth="63.736751556396484" />
+    <Button fx:id="add_book" layoutX="386.0" layoutY="69.0" mnemonicParsing="false" text="Pridėti knygą" />
+    <TableView fx:id="books_table" layoutX="30.0" layoutY="279.0" prefHeight="200.0" prefWidth="804.0">
+      <columns>
+          <TableColumn fx:id="col_id" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="col_name" prefWidth="110.39998626708984" text="Pavadinimas" />
+          <TableColumn fx:id="col_author" prefWidth="92.0" text="Autorius" />
+          <TableColumn fx:id="col_year" prefWidth="108.0" text="Metai" />
+      </columns>
+        <contextMenu>
+          <ContextMenu>
+              <items>
+                  <MenuItem fx:id="remove_book" mnemonicParsing="false" text="Šalinti" />
+              </items>
+          </ContextMenu>
+        </contextMenu>
+    </TableView>
+</AnchorPane>
