@@ -2,6 +2,8 @@ package com.example.pamokafx2.Controllers;
 
 import com.example.pamokafx2.Models.Model;
 import com.example.pamokafx2.Utilities.AlertUtility;
+import com.example.pamokafx2.Views.ViewFactory;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -18,6 +20,7 @@ public class CreateBookController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         authorChoice.getItems().addAll(Model.getInstance().getAuthorLastNames());
         create_book_btn.setOnAction(e -> onBook());
     }
@@ -27,13 +30,22 @@ public class CreateBookController implements Initializable {
         String author = authorChoice.getValue();
         String year = year_field.getText();
 
-        //Create the book
+        if (authorChoice.getItems().isEmpty()) {
+            AlertUtility.displayInformation("Sistemoje nėra autorių");
+        }else {
+            //Create the book
 
-        Model.getInstance().createBook(name, author, year);
-
-        AlertUtility.displayInformation("Knyga sėkmingai sukurta");
-        emptyFields();
+            if (name.isEmpty() || author == null || year.isEmpty()) {
+                AlertUtility.displayInformation("Užpildykite visus laukus");
+            }
+            else {
+                Model.getInstance().createBook(name, author, year);
+                AlertUtility.displayInformation("Knyga sėkmingai sukurta");
+                emptyFields();
+            }
+        }
     }
+
 
     private void emptyFields(){
         name_field.setText("");

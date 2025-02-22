@@ -30,10 +30,15 @@ public class CreateAuthorController implements Initializable {
 
         //Create the author
 
-        Model.getInstance().createAuthor(firstName, lastName, Email, City);
+        if (firstName.isEmpty() || lastName.isEmpty() || Email.isEmpty() ||City.isEmpty()) {
+            AlertUtility.displayInformation("Užpildykite visus laukus");
+        }
+        else {
+            Model.getInstance().createAuthor(firstName, lastName, Email, City);
 
-        AlertUtility.displayInformation("Autorius sėkmingai sukurtas");
-        emptyFields();
+            AlertUtility.displayInformation("Autorius sėkmingai sukurtas");
+            emptyFields();
+        }
     }
 
     private void emptyFields(){

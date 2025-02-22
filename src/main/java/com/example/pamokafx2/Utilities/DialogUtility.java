@@ -76,6 +76,7 @@ public class DialogUtility {
 
         TextField nameField = new TextField(book.getName());
         ChoiceBox<String> authorField = new ChoiceBox<String>();
+        authorField.setValue(book.getAuthor());
         authorField.getItems().addAll(Model.getInstance().getAuthorLastNames());
         TextField yearField = new TextField(book.getYear());
 
