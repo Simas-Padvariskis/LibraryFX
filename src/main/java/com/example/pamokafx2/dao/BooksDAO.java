@@ -20,18 +20,24 @@ public class BooksDAO {
         this.conn = conn;
     }
 
-    public void create(String name, String author, String year) {
-        String sql = "INSERT INTO books (Name, Author, Year, User_id, Author_id) VALUES (?, ?, ?, ?, ?)";
+    public void create(String isbn, String name, String category, String description, String pageNumber, String year, String price, String author, String reserved) {
+        String sql = "INSERT INTO books (ISBN, Name, Category, Description, Page_number, Year, Price, Author, Reserved, User_id, Author_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         int userId = Model.getInstance().getLoggedUserId();
         int authorId = Model.getInstance().getAuthorId(author);
 
         try(PreparedStatement stmt = this.conn.prepareStatement(sql)){
-            stmt.setString(1, name);
-            stmt.setString(2, author);
-            stmt.setString(3, year);
-            stmt.setInt(4, userId);
-            stmt.setInt(5, authorId);
+            stmt.setString(1, isbn);
+            stmt.setString(2, name);
+            stmt.setString(3, category);
+            stmt.setString(4, description);
+            stmt.setString(5, pageNumber);
+            stmt.setString(6, year);
+            stmt.setString(7, price);
+            stmt.setString(8, author);
+            stmt.setString(9, reserved);
+            stmt.setInt(10, userId);
+            stmt.setInt(11, authorId);
             stmt.executeUpdate();
             logger.info("Books created successfully");
         }catch (SQLException e) {
@@ -41,16 +47,22 @@ public class BooksDAO {
 
     public ObservableList<Book> findAll() {
         ObservableList<Book> books = FXCollections.observableArrayList();
-        String sql = "SELECT ID, Name, Author, Year FROM books";
+        String sql = "SELECT ID, ISBN, Name, Category, Description, Page_number, Year, Price, Author, Reserved FROM books";
 
         try(PreparedStatement stmt = this.conn.prepareStatement(sql)){
             ResultSet resultSet = stmt.executeQuery();
             while(resultSet.next()){
                 int id = resultSet.getInt("ID");
+                String isbn = resultSet.getString("ISBN");
                 String name = resultSet.getString("Name");
-                String author = resultSet.getString("Author");
+                String category = resultSet.getString("Category");
+                String description = resultSet.getString("Description");
+                String pageNumber = resultSet.getString("Page_number");
                 String year = resultSet.getString("Year");
-                Book book = new Book(id, name, author, year);
+                String price = resultSet.getString("Price");
+                String author = resultSet.getString("Author");
+                String reserved = resultSet.getString("Reserved");
+                Book book = new Book(id, isbn, name, category, description, pageNumber, year, price, author, reserved);
                 books.add(book);
             }
         }catch (SQLException e) {
@@ -82,12 +94,19 @@ public class BooksDAO {
 
         Book book = (Book) entity;
 
-        String sql = "UPDATE books SET Name = ?, Author = ?, Year = ? WHERE ID = ?";
+        String sql = "UPDATE books SET ISBN = ?, Name = ?, Category = ?, Description = ?, Page_number = ?, Year = ?, Price = ?, Author = ?, Reserved = ?, Author_id = ? WHERE ID = ?";
         try(PreparedStatement stmt = this.conn.prepareStatement(sql)){
-            stmt.setString(1, book.getName());
-            stmt.setString(2, book.getAuthor());
-            stmt.setString(3, book.getYear());
-            stmt.setInt(4, book.getId());
+            stmt.setString(1, book.getIsbn());
+            stmt.setString(2, book.getName());
+            stmt.setString(3, book.getCategory());
+            stmt.setString(4, book.getDescription());
+            stmt.setString(5, book.getPage_number());
+            stmt.setString(6, book.getYear());
+            stmt.setString(7, book.getPrice());
+            stmt.setString(8, book.getAuthor());
+            stmt.setString(9, book.getReserved());
+            stmt.setInt(10, Model.getInstance().getAuthorId(book.getAuthor()));
+            stmt.setInt(11, book.getId());
 
             int rowsUpdated = stmt.executeUpdate();
 
@@ -100,5 +119,22 @@ public class BooksDAO {
             logger.severe("Error updating book: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    public ObservableList<String> findBooksWithAuthors(){
+        ObservableList<String> booksNamesAuthors = FXCollections.observableArrayList();
+        String sql = "SELECT Name, Author FROM books";
+
+        try(PreparedStatement stmt = this.conn.prepareStatement(sql)){
+            ResultSet resultSet = stmt.executeQuery();
+            while(resultSet.next()){
+                String name = resultSet.getString("Name");
+                String author = resultSet.getString("Author");
+                booksNamesAuthors.add(name + " - " + author);
+            }
+        }catch (SQLException e) {
+            logger.severe("Error fetching bookNames and authors: " + e.getMessage());
+        }
+        return booksNamesAuthors;
     }
 }

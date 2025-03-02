@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="700.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pamokafx2.Controllers.AccountingController">
+   <children>
+      <Label layoutX="387.0" layoutY="14.0" prefWidth="85.0" text="Ataskaitos">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Button fx:id="hand_book" layoutX="386.0" layoutY="68.0" mnemonicParsing="false" text="Išduoti knygą" />
+      <TableView fx:id="books_table" layoutX="28.0" layoutY="250.0" prefHeight="200.0" prefWidth="804.0">
+         <columns>
+            <TableColumn fx:id="col_id" prefWidth="60.00000190734863" text="ID" />
+            <TableColumn fx:id="col_isbn" prefWidth="90.39998626708984" text="ISBN" />
+            <TableColumn fx:id="col_name" prefWidth="99.99996948242188" text="Pavadinimas" />
+            <TableColumn fx:id="col_category" prefWidth="105.5999755859375" text="Kategorija" />
+            <TableColumn fx:id="col_author" prefWidth="103.20001220703125" text="Autorius" />
+            <TableColumn fx:id="col_rezervation" prefWidth="117.60000610351562" text="Rezervacija" />
+            <TableColumn fx:id="col_return_time" prefWidth="231.20001220703125" text="Grąžinimo terminas" />
+         </columns>
+         <contextMenu>
+            <ContextMenu>
+               <items>
+                  <MenuItem fx:id="return_book" mnemonicParsing="false" text="Grąžinti" />
+                  <MenuItem fx:id="remove_book" mnemonicParsing="false" text="Šalinti" />
+               </items>
+            </ContextMenu>
+         </contextMenu>
+      </TableView>
+      <ChoiceBox fx:id="filter_choice" layoutX="28.0" layoutY="205.0" prefWidth="150.0" />
+      <Label layoutX="28.0" layoutY="177.0" prefWidth="85.0" text="Filtruoti">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

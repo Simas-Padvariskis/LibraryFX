@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="780.0" prefWidth="600.0" styleClass="create_client_container" stylesheets="@../Styles/handBook.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pamokafx2.Controllers.HandBookController">
+   <VBox layoutX="21.0" layoutY="46.0" prefHeight="500.0" prefWidth="600.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Skaitytojas" />
+      <ChoiceBox fx:id="readerChoice" prefWidth="150.0" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Knyga" />
+      <ChoiceBox fx:id="bookChoice" prefWidth="150.0" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Grąžinimo laikotarpis" />
+      <DatePicker fx:id="dateChoice" />
+      <Button fx:id="hand_book_btn" mnemonicParsing="false" styleClass="hand_book_btn" text="Išduoti" />
+   </VBox>
+   <Text layoutX="278.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Knygos išdavimas" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
+</AnchorPane>

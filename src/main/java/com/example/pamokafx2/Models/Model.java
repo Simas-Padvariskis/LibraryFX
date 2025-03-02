@@ -1,9 +1,7 @@
 package com.example.pamokafx2.Models;
 
 import com.example.pamokafx2.Views.ViewFactory;
-import com.example.pamokafx2.dao.AuthorsDAO;
-import com.example.pamokafx2.dao.BooksDAO;
-import com.example.pamokafx2.dao.UserDAO;
+import com.example.pamokafx2.dao.*;
 import javafx.collections.ObservableList;
 
 import javax.swing.text.View;
@@ -18,12 +16,16 @@ public class Model {
     private User currentUser;
     public final AuthorsDAO authorsDAO;;
     public final BooksDAO booksDAO;
+    public final ReadersDAO readersDAO;
+    public final HandedBooksDAO handedBooksDAO;
 
     private Model () {
         this.viewFactory = new ViewFactory();
         this.userDAO = new UserDAO(new DatabaseDriver().getConnection());
         this.authorsDAO = new AuthorsDAO(new DatabaseDriver().getConnection());
         this.booksDAO = new BooksDAO(new DatabaseDriver().getConnection());
+        this.readersDAO = new ReadersDAO(new DatabaseDriver().getConnection());
+        this.handedBooksDAO = new HandedBooksDAO(new DatabaseDriver().getConnection());
         this.currentUser = null;
     }
 
@@ -153,12 +155,32 @@ public class Model {
         return authorsDAO.findLastNames();
     }
 
+//    /**
+//     * Retrieves all readers names from DB
+//     *
+//     * @return String
+//     */
+//
+//    public ObservableList<String> getReadersNames(){
+//        return readersDAO.findReadersNames();
+//    }
+
+//    /**
+//     * Retrieves all booksNames and authors from DB
+//     *
+//     * @return String
+//     */
+//
+//    public ObservableList<String> getBooksWithAuthors(){
+//        return booksDAO.findBooksWithAuthors();
+//    }
+
     /**
      * Create book
      */
 
-    public void createBook(String name, String author, String year){
-        booksDAO.create(name, author, year);
+    public void createBook(String isbn, String name, String category, String description, String pageNumber, String year, String price, String author, String reserved){
+        booksDAO.create(isbn, name, category, description, pageNumber, year, price, author, reserved);
     }
 
     /**
@@ -186,6 +208,40 @@ public class Model {
         }
         return id;
     }
+
+//    /**
+//     * Find book id by bookName and bookAuthor
+//     * @param bookName
+//     * @param authorName
+//     */
+//
+//    public int getBookId(String bookName, String authorName){
+//        int id = -1;
+//        for (int i = 0; i < getBooks().size(); i++) {
+//            if (getBooks().get(i).getName().equals(bookName) && getBooks().get(i).getAuthor().equals(authorName)) {
+//                id = getBooks().get(i).getId();
+//                break;
+//            }
+//        }
+//        return id;
+//    }
+
+//    /**
+//     * Find reader id by reader firstName and lastName
+//     * @param firstName
+//     * @param lastName
+//     */
+//
+//    public int getReaderId(String firstName, String lastName){
+//        int id = -1;
+//        for (int i = 0; i < getReaders().size(); i++) {
+//            if (getReaders().get(i).getFirstName().equals(firstName) && getReaders().get(i).getLastName().equals(lastName)) {
+//                id = getReaders().get(i).getId();
+//                break;
+//            }
+//        }
+//        return id;
+//    }
 
     /**
      * Delete author from DB by ID
@@ -218,4 +274,89 @@ public class Model {
     public void updateBook(Book book){
         booksDAO.update(book);
     }
+
+    /**
+     * Retrieves all readers from DB
+     *
+     * @return readers
+     */
+
+    /**
+     * Create reader
+     */
+
+    public void createReader(String firstName, String lastName){
+        readersDAO.create(firstName, lastName);
+    }
+
+    public ObservableList<Reader> getReaders(){
+        return readersDAO.findAll();
+    }
+
+    /**
+     * Delete reader from DB by ID
+     * @param id the ID reader
+     */
+    public void deleteReader(int id){
+        readersDAO.delete(id);
+    }
+
+    /**
+     * Update existing reader in the database
+     */
+
+    public void updateReader(Reader reader){
+        readersDAO.update(reader);
+    }
+
+    /**
+     * Create handed book
+     */
+
+    public void createHandedBook(Book book, Reader reader, String returnDate){
+        handedBooksDAO.create(book, reader, returnDate);
+    }
+
+    /**
+     * Retrieves all handedBooks from DB
+     *
+     * @return authors
+     */
+
+    public ObservableList<HandedBook> getHandedBooks(){
+        return handedBooksDAO.findAll();
+    }
+
+    /**
+     * Delete handedBook from DB by ID
+     * @param id the ID handedBook
+     */
+    public void deleteHandedBook(int id){
+        handedBooksDAO.delete(id);
+    }
+
+    /**
+     * Return handedBook from DB by ID
+     * @param id the ID handedBook
+     */
+    public void returnHandedBook(int id){
+        handedBooksDAO.returnBook(id);
+    }
+
+//    /**
+//     * Find book by bookName and authorName
+//     * @param bookName
+//     * @param authorName
+//     */
+//
+//    public Book getBookByNameAndAuthor (String bookName, String authorName){
+//        Book foundBook = null;
+//        for (int i = 0; i < getBooks().size(); i++) {
+//            if (getBooks().get(i).getName().equals(bookName) && getBooks().get(i).getAuthor().equals(authorName)) {
+//                foundBook = getBooks().get(i);
+//                break;
+//            }
+//        }
+//        return foundBook;
+//    }
 }

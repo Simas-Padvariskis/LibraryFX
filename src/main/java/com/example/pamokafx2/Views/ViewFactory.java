@@ -15,6 +15,10 @@ public class ViewFactory {
     private AnchorPane createAuthorView;
     private AnchorPane booksView;
     private AnchorPane createBookView;
+    private AnchorPane readerView;
+    private AnchorPane createReaderView;
+    private AnchorPane accountingView;
+    private AnchorPane handBookView;
 
     public ViewFactory() {
         this.userSelectedMenuItem = new SimpleObjectProperty<>();
@@ -136,6 +140,74 @@ public class ViewFactory {
             }
         }
         return createBookView;
+    }
+
+    /**
+     * Load and return readers view
+     *
+     * @return readerView
+     */
+
+    public AnchorPane getReaderView(){
+        if(readerView == null) {
+            try {
+                readerView = new FXMLLoader(getClass().getResource("/Fxml/Readers.fxml")).load();
+            }catch (Exception e){
+                System.out.println(e);
+            }
+        }
+        return readerView;
+    }
+
+    /**
+     * Load and return createReader view
+     *
+     * @return createReaderView
+     */
+
+    public AnchorPane getCreateReaderView(){
+        if(createReaderView == null) {
+            try {
+                createReaderView = new FXMLLoader(getClass().getResource("/Fxml/CreateReader.fxml")).load();
+            }catch (Exception e){
+                System.out.println(e);
+            }
+        }
+        return createReaderView;
+    }
+
+    /**
+     * Load and return accounting view
+     *
+     * @return accountingView
+     */
+
+    public AnchorPane getAccountingView(){
+        if(accountingView == null) {
+            try {
+                accountingView = new FXMLLoader(getClass().getResource("/Fxml/Accounting.fxml")).load();
+            }catch (Exception e){
+                System.out.println(e);
+            }
+        }
+        return accountingView;
+    }
+
+    /**
+     * Load and return handBook view
+     *
+     * @return handBookView
+     */
+
+    public AnchorPane getHandBookView(){
+        if(handBookView == null) {
+            try {
+                handBookView = new FXMLLoader(getClass().getResource("/Fxml/HandBook.fxml")).load();
+            }catch (Exception e){
+                System.out.println(e);
+            }
+        }
+        return handBookView;
     }
 
     /*

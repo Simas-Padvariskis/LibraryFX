@@ -20,6 +20,10 @@ public class MenuController implements Initializable {
     public Button authors_btn;
     @FXML
     public Button books_btn;
+    @FXML
+    public Button readers_btn;
+    @FXML
+    public Button accounting_btn;
 
     @Override
     public void initialize (URL location, ResourceBundle resources) {
@@ -33,6 +37,8 @@ public class MenuController implements Initializable {
         logout_btn.setOnAction(event -> onLogout());
         authors_btn.setOnAction(event -> onAuthors());
         books_btn.setOnAction(event -> onBooks());
+        readers_btn.setOnAction(event -> onReaders());
+        accounting_btn.setOnAction(event -> onAccounting());
     }
 
     /**
@@ -51,6 +57,24 @@ public class MenuController implements Initializable {
     public void onBooks(){
         //Navigate the books window
         Model.getInstance().getViewFactory().getUserSelectedMenuItem().set(MenuItems.BOOKS);
+    }
+
+    /**
+     * Handle readers window
+     */
+
+    public void onReaders(){
+        //Navigate the readers window
+        Model.getInstance().getViewFactory().getUserSelectedMenuItem().set(MenuItems.READERS);
+    }
+
+    /**
+     * Handle accounting window
+     */
+
+    public void onAccounting(){
+        //Navigate the readers window
+        Model.getInstance().getViewFactory().getUserSelectedMenuItem().set(MenuItems.ACCOUNTING);
     }
 
     /**

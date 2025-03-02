@@ -7,6 +7,7 @@ import com.example.pamokafx2.Utilities.AlertUtility;
 import com.example.pamokafx2.Utilities.DialogUtility;
 import com.example.pamokafx2.Views.MenuItems;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -23,6 +24,18 @@ public class BooksController implements Initializable {
     public TableColumn col_author;
     public TableColumn col_year;
     public MenuItem remove_book;
+    public TableColumn col_isbn;
+    public TableColumn col_category;
+    public TableColumn col_description;
+    public TableColumn col_page_number;
+    public TableColumn col_price;
+    public TableColumn col_rezervation;
+    public TextField filterISBN;
+    public TextField filterAuthor;
+    public TextField filterName;
+    public Button filterButton;
+
+    private FilteredList<Book> filteredBooks;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -31,6 +44,11 @@ public class BooksController implements Initializable {
         loadBookData();
         remove_book.setOnAction(event -> onRemoveBook());
         setRowFactoryForBooksTable();
+
+        //Data filtering
+        filteredBooks = new FilteredList<>(Model.getInstance().getBooks());
+        books_table.setItems(filteredBooks);
+        filterButton.setOnAction(event -> applyFilters());
     }
 
     /**
@@ -47,9 +65,15 @@ public class BooksController implements Initializable {
 
     private void initTableColumns(){
         col_id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        col_isbn.setCellValueFactory(new PropertyValueFactory<>("isbn"));
         col_name.setCellValueFactory(new PropertyValueFactory<>("name"));
-        col_author.setCellValueFactory(new PropertyValueFactory<>("author"));
+        col_category.setCellValueFactory(new PropertyValueFactory<>("category"));
+        col_description.setCellValueFactory(new PropertyValueFactory<>("description"));
+        col_page_number.setCellValueFactory(new PropertyValueFactory<>("page_number"));
         col_year.setCellValueFactory(new PropertyValueFactory<>("year"));
+        col_price.setCellValueFactory(new PropertyValueFactory<>("price"));
+        col_author.setCellValueFactory(new PropertyValueFactory<>("author"));
+        col_rezervation.setCellValueFactory(new PropertyValueFactory<>("reserved"));
     }
 
     /**
@@ -109,6 +133,32 @@ public class BooksController implements Initializable {
                 }
             });
             return row;
+        });
+    }
+
+    /**
+     * Books data filter
+     */
+
+    private void applyFilters(){
+        String isbnFilter = filterISBN.getText().toLowerCase();
+        String authorFilter = filterAuthor.getText().toLowerCase();
+        String nameFilter = filterName.getText().toLowerCase();
+
+        filteredBooks.setPredicate(book -> {
+            if(!isbnFilter.isEmpty() && !book.getIsbn().contains(isbnFilter)){
+                return false;
+            }
+
+            if(!authorFilter.isEmpty() && !book.getAuthor().toLowerCase().contains(authorFilter)){
+                return false;
+            }
+
+            if(!nameFilter.isEmpty() && !book.getName().toLowerCase().contains(nameFilter)){
+                return false;
+            }
+
+            return true;
         });
     }
 }
