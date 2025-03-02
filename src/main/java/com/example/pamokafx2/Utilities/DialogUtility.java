@@ -84,7 +84,6 @@ public class DialogUtility {
         ChoiceBox<String> authorField = new ChoiceBox<String>();
         authorField.setValue(book.getAuthor());
         authorField.getItems().addAll(Model.getInstance().getAuthorLastNames());
-        TextField reservedField = new TextField(book.getReserved());
 
         grid.add(new Label("ISBN: "), 0, 0);
         grid.add(isbnField, 1, 0);
@@ -102,8 +101,6 @@ public class DialogUtility {
         grid.add(priceField, 1, 6);
         grid.add(new Label("Autorius: "), 0, 7);
         grid.add(authorField, 1, 7);
-        grid.add(new Label("Rezervazija: "), 0, 8);
-        grid.add(reservedField, 1, 8);
 
         dialog.getDialogPane().setContent(grid);
 
@@ -117,7 +114,6 @@ public class DialogUtility {
                 book.setYear(yearField.getText().trim());
                 book.setPrice(priceField.getText().trim());
                 book.setAuthor(authorField.getValue());
-                book.setReserved(reservedField.getText());
             }
             return book;
         });

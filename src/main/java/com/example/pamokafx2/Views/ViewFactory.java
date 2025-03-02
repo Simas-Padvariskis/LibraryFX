@@ -37,13 +37,11 @@ public class ViewFactory {
      * Show dashboard
      */
     public AnchorPane getDashboardView() {
-        if(dashboard == null) {
             try {
                 dashboard = new FXMLLoader(getClass().getResource("/Fxml/Dashboard.fxml")).load();
             }catch (Exception e){
                 e.printStackTrace();
             }
-        }
         return dashboard;
     }
 
@@ -81,13 +79,11 @@ public class ViewFactory {
      */
 
     public AnchorPane getAuthorsView(){
-        if(authorsView == null) {
             try {
                 authorsView = new FXMLLoader(getClass().getResource("/Fxml/Authors.fxml")).load();
             }catch (Exception e){
                 System.out.println(e);
             }
-        }
         return authorsView;
     }
 
@@ -98,13 +94,11 @@ public class ViewFactory {
      */
 
     public AnchorPane getCreateAuthorView(){
-        if(createAuthorView == null) {
             try {
                 createAuthorView = new FXMLLoader(getClass().getResource("/Fxml/CreateAuthor.fxml")).load();
             }catch (Exception e){
                 System.out.println(e);
             }
-        }
         return createAuthorView;
     }
 
@@ -115,13 +109,11 @@ public class ViewFactory {
      */
 
     public AnchorPane getBooksView(){
-        if(booksView == null) {
             try {
                 booksView = new FXMLLoader(getClass().getResource("/Fxml/Books.fxml")).load();
             }catch (Exception e){
                 System.out.println(e);
             }
-        }
         return booksView;
     }
 
@@ -132,13 +124,11 @@ public class ViewFactory {
      */
 
     public AnchorPane getCreateBookView(){
-        if(createBookView == null) {
             try {
                 createBookView = new FXMLLoader(getClass().getResource("/Fxml/CreateBook.fxml")).load();
             }catch (Exception e){
                 System.out.println(e);
             }
-        }
         return createBookView;
     }
 
@@ -149,13 +139,11 @@ public class ViewFactory {
      */
 
     public AnchorPane getReaderView(){
-        if(readerView == null) {
             try {
                 readerView = new FXMLLoader(getClass().getResource("/Fxml/Readers.fxml")).load();
             }catch (Exception e){
                 System.out.println(e);
             }
-        }
         return readerView;
     }
 
@@ -166,13 +154,11 @@ public class ViewFactory {
      */
 
     public AnchorPane getCreateReaderView(){
-        if(createReaderView == null) {
             try {
                 createReaderView = new FXMLLoader(getClass().getResource("/Fxml/CreateReader.fxml")).load();
             }catch (Exception e){
                 System.out.println(e);
             }
-        }
         return createReaderView;
     }
 
@@ -183,13 +169,11 @@ public class ViewFactory {
      */
 
     public AnchorPane getAccountingView(){
-        if(accountingView == null) {
             try {
                 accountingView = new FXMLLoader(getClass().getResource("/Fxml/Accounting.fxml")).load();
             }catch (Exception e){
                 System.out.println(e);
             }
-        }
         return accountingView;
     }
 
@@ -200,13 +184,11 @@ public class ViewFactory {
      */
 
     public AnchorPane getHandBookView(){
-        if(handBookView == null) {
             try {
                 handBookView = new FXMLLoader(getClass().getResource("/Fxml/HandBook.fxml")).load();
             }catch (Exception e){
                 System.out.println(e);
             }
-        }
         return handBookView;
     }
 

@@ -16,14 +16,13 @@
       <columns>
           <TableColumn fx:id="col_id" prefWidth="60.00000190734863" text="ID" />
          <TableColumn fx:id="col_isbn" prefWidth="61.599998474121094" text="ISBN" />
-          <TableColumn fx:id="col_name" prefWidth="76.0" text="Pavadinimas" />
-         <TableColumn fx:id="col_category" prefWidth="85.60003662109375" text="Kategorija" />
-         <TableColumn fx:id="col_description" prefWidth="128.79998779296875" text="Aprašymas" />
-         <TableColumn fx:id="col_page_number" prefWidth="74.40005493164062" text="Puslapiai" />
-          <TableColumn fx:id="col_year" prefWidth="85.5999755859375" text="Metai" />
-         <TableColumn fx:id="col_price" prefWidth="68.0" text="Kaina" />
-          <TableColumn fx:id="col_author" prefWidth="87.19989013671875" text="Autorius" />
-         <TableColumn fx:id="col_rezervation" prefWidth="77.60009765625" text="Rezervacija" />
+          <TableColumn fx:id="col_name" prefWidth="97.5999755859375" text="Pavadinimas" />
+         <TableColumn fx:id="col_category" prefWidth="83.99993896484375" text="Kategorija" />
+         <TableColumn fx:id="col_description" prefWidth="124.0" text="Aprašymas" />
+         <TableColumn fx:id="col_page_number" prefWidth="92.79995727539062" text="Puslapiai" />
+          <TableColumn fx:id="col_year" prefWidth="89.60003662109375" text="Metai" />
+         <TableColumn fx:id="col_price" prefWidth="84.00006103515625" text="Kaina" />
+          <TableColumn fx:id="col_author" prefWidth="115.20001220703125" text="Autorius" />
       </columns>
         <contextMenu>
           <ContextMenu>

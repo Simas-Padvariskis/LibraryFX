@@ -12,6 +12,7 @@ public class HandedBook {
     private StringProperty category;
     private StringProperty author;
     private StringProperty reserved;
+    private StringProperty returnedDate;
     private StringProperty returnDate;
 
     /**
@@ -23,29 +24,19 @@ public class HandedBook {
      * @param category - handedBook category
      * @param author - handedBook author
      * @param reserved - handedBook reservation status
+     * @param returnedDate - handedBook returned date
      * @param returnDate - handedBook return date
      */
 
-    public HandedBook(int id, String isbn, String name, String category, String author, String reserved, String returnDate) {
+    public HandedBook(int id, String isbn, String name, String category, String author, String reserved, String returnedDate, String returnDate) {
         this.id = new SimpleIntegerProperty(id);
         this.isbn = new SimpleStringProperty(isbn);
         this.name = new SimpleStringProperty(name);
         this.category = new SimpleStringProperty(category);
         this.author = new SimpleStringProperty(author);
         this.reserved = new SimpleStringProperty(reserved);
+        this.returnedDate = new SimpleStringProperty(returnedDate);
         this.returnDate = new SimpleStringProperty(returnDate);
-    }
-
-    public String getIsbn() {
-        return isbn.get();
-    }
-
-    public StringProperty isbnProperty() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn.set(isbn);
     }
 
     public int getId() {
@@ -58,6 +49,18 @@ public class HandedBook {
 
     public void setId(int id) {
         this.id.set(id);
+    }
+
+    public String getIsbn() {
+        return isbn.get();
+    }
+
+    public StringProperty isbnProperty() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn.set(isbn);
     }
 
     public String getName() {
@@ -108,6 +111,18 @@ public class HandedBook {
         this.reserved.set(reserved);
     }
 
+    public String getReturnedDate() {
+        return returnedDate.get();
+    }
+
+    public StringProperty returnedDateProperty() {
+        return returnedDate;
+    }
+
+    public void setReturnedDate(String returnedDate) {
+        this.returnedDate.set(returnedDate);
+    }
+
     public String getReturnDate() {
         return returnDate.get();
     }
@@ -129,6 +144,7 @@ public class HandedBook {
                 ", category=" + category +
                 ", author=" + author +
                 ", reserved=" + reserved +
+                ", returnedDate=" + returnedDate +
                 ", returnDate=" + returnDate +
                 '}';
     }

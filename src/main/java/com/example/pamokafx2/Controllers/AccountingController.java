@@ -34,6 +34,7 @@ public class AccountingController implements Initializable {
     public TableColumn col_return_time;
     public MenuItem return_book;
     public ChoiceBox <String> filter_choice;
+    public TableColumn col_returned_date;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -42,7 +43,6 @@ public class AccountingController implements Initializable {
         loadHandedBooksData();
 
         remove_book.setOnAction(event -> onRemoveHandedBook());
-//        setRowFactoryForAuthorsTable();
         return_book.setOnAction(event -> onReturnHandedBook());
 
         // Initialize the ChoiceBox with filter options
@@ -70,6 +70,7 @@ public class AccountingController implements Initializable {
         col_category.setCellValueFactory(new PropertyValueFactory<>("category"));
         col_author.setCellValueFactory(new PropertyValueFactory<>("author"));
         col_rezervation.setCellValueFactory(new PropertyValueFactory<>("reserved"));
+        col_returned_date.setCellValueFactory(new PropertyValueFactory<>("returnedDate"));
         col_return_time.setCellValueFactory(new PropertyValueFactory<>("returnDate"));
     }
 
@@ -108,7 +109,7 @@ public class AccountingController implements Initializable {
     }
 
     /**
-     * Handle handedBook remove
+     * Handle handedBook "return"
      */
 
     private void onReturnHandedBook(){
@@ -125,7 +126,6 @@ public class AccountingController implements Initializable {
             );
             if (confirmed) {
                 selectedHandedBook.setReserved("Grąžinta");
-                selectedHandedBook.setReturnDate("");
                 Model.getInstance().returnHandedBook(selectedHandedBook.getId());
                 AlertUtility.displayInformation("Išduota knyga grąžinta sėkmingai");
             }
@@ -145,7 +145,7 @@ public class AccountingController implements Initializable {
             } else if ("Grąžintos".equals(selectedFilter)) {
                 return "Grąžinta".equals(book.getReserved()); // Show only "returned" books
             } else if ("Vėluojama grąžinti".equals(selectedFilter)){
-                return LocalDate.now().isAfter(LocalDate.parse(book.getReturnDate()));
+                return (LocalDate.now().isAfter(LocalDate.parse(book.getReturnDate())) && book.getReserved().equals("Paimta"));
             }
             return false;
         });
@@ -154,33 +154,4 @@ public class AccountingController implements Initializable {
         books_table.setItems(filteredBooks);
     }
 
-//    /**
-//     * Sets row factory for the handedBooks table
-//     */
-//
-//    private void setRowFactoryForHandedBooksTable(){
-//        books_table.setRowFactory(tv ->{
-//            TableRow<HandedBook> row = new TableRow<>();
-//            row.setOnMouseClicked(event -> {
-//                if(event.getClickCount() == 2 && (!row.isEmpty())){
-//                    HandedBook selectedhandedBook = row.getItem();
-//                    editHandedBook(selectedhandedBook);
-//                }
-//            });
-//            return row;
-//        });
-//    }
-//
-//    /**
-//     * Opens dialog for editing handedBook
-//     * @param handedBook
-//     */
-//
-//    private void editHandedBook(HandedBook handedBook){
-//        Optional<HandedBook> result = DialogUtility.showEditHandedBookDialog(handedBook);
-//        result.ifPresent(updateHandedBook ->{
-//            Model.getInstance().updateHandedBook(updateHandedBook);
-//            loadHandedBooksData();
-//        });
-//    }
 }

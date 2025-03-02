@@ -25,7 +25,7 @@ public class HandedBooksDAO {
     }
 
     public void create(Book book, Reader reader, String returnDate) {
-        String sql = "INSERT INTO handed_books (ID, ISBN, Name, Category, Author, Reserved, Return_date, Reader_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO handed_books (ISBN, Name, Category, Author, Reserved, Returned_date, Return_date, Reader_id, Book_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         int bookId = book.getId();
         int readerId = reader.getId();
@@ -33,13 +33,15 @@ public class HandedBooksDAO {
         String name = book.getName();
         String category = book.getCategory();
         String author = book.getAuthor();
-        String reserved = book.getReserved();
+        String reserved = "Paimta";
 
         //Find if handedBook is already taken
+//        String idsql = "SELECT Book_id FROM handed_books WHERE ID = ?";
+
         boolean handedBookIsTaken = false;
         ObservableList<HandedBook> handedBooks = findAll();
         for (HandedBook handedBook : handedBooks) {
-            if (handedBook.getId() == bookId) {
+            if (retrieveBook_idFromHandedBook(handedBook.getId()) == bookId) {
                 if (handedBook.getReserved().equals("Paimta")) {
                     handedBookIsTaken = true;
                     break;
@@ -49,19 +51,18 @@ public class HandedBooksDAO {
 
         if (!handedBookIsTaken) {
             try (PreparedStatement stmt = this.conn.prepareStatement(sql)) {
-                stmt.setInt(1, bookId);
-                stmt.setString(2, isbn);
-                stmt.setString(3, name);
-                stmt.setString(4, category);
-                stmt.setString(5, author);
-                stmt.setString(6, reserved);
+                stmt.setString(1, isbn);
+                stmt.setString(2, name);
+                stmt.setString(3, category);
+                stmt.setString(4, author);
+                stmt.setString(5, reserved);
+                stmt.setString(6, null);
                 stmt.setString(7, returnDate);
                 stmt.setInt(8, readerId);
+                stmt.setInt(9, bookId);
                 stmt.executeUpdate();
-                book.setReserved("Paimta");
                 AlertUtility.displayInformation("Knyga sėkmingai išduota");
                 logger.info("Handed Book created successfully");
-                setReserved(book, bookId);
             } catch (SQLException e) {
                 logger.severe("Error creating a Handed Book: " + e.getMessage());
             }
@@ -74,7 +75,7 @@ public class HandedBooksDAO {
 
     public ObservableList<HandedBook> findAll() {
         ObservableList<HandedBook> handedBooks = FXCollections.observableArrayList();
-        String sql = "SELECT ID, ISBN, Name, Category, Author, Reserved, Return_date FROM handed_books";
+        String sql = "SELECT ID, ISBN, Name, Category, Author, Reserved, Returned_date, Return_date FROM handed_books";
 
         try(PreparedStatement stmt = this.conn.prepareStatement(sql)){
             ResultSet resultSet = stmt.executeQuery();
@@ -85,8 +86,9 @@ public class HandedBooksDAO {
                 String category = resultSet.getString("Category");
                 String author = resultSet.getString("Author");
                 String reserved = resultSet.getString("Reserved");
+                String returnedDate = resultSet.getString("Returned_date");
                 String returnDate = resultSet.getString("Return_date");
-                HandedBook handedBook = new HandedBook(id, isbn, name, category, author, reserved, returnDate);
+                HandedBook handedBook = new HandedBook(id, isbn, name, category, author, reserved, returnedDate, returnDate);
                 handedBooks.add(handedBook);
             }
         }catch (SQLException e) {
@@ -112,7 +114,7 @@ public class HandedBooksDAO {
     }
 
     public void returnBook (int id) {
-        String sql = "UPDATE handed_books SET Reserved = ?, Return_date = ? WHERE ID = ?";
+        String sql = "UPDATE handed_books SET Reserved = ?, Returned_date = ? WHERE ID = ?";
 
         try(PreparedStatement stmt = this.conn.prepareStatement(sql)){
             stmt.setString(1, "Grąžinta");
@@ -130,113 +132,21 @@ public class HandedBooksDAO {
             e.printStackTrace();
         }
     }
-//
-//    public void delete(int id) {
-//        String sql = "DELETE FROM books WHERE ID = ?";
-//        try(PreparedStatement stmt = this.conn.prepareStatement(sql)){
-//            stmt.setInt(1, id);
-//            int rowsAffected = stmt.executeUpdate();
-//            if(rowsAffected > 0){
-//                logger.info("Book with ID " + id + " wes deleted successfully");
-//            }else{
-//                logger.warning("No book found with ID " + id);
-//            }
-//        }catch(SQLException e){
-//            logger.severe("Error deleting book with  ID: " + id + ": " + e.getMessage());
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public void update(Object entity) {
-//        if(!(entity instanceof Book)){
-//            throw new IllegalArgumentException("Expected Book object");
-//        }
-//
-//        Book book = (Book) entity;
-//
-//        String sql = "UPDATE books SET ISBN = ?, Name = ?, Category = ?, Description = ?, Page_number = ?, Year = ?, Price = ?, Author = ?, Reserved = ?, Author_id = ? WHERE ID = ?";
-//        try(PreparedStatement stmt = this.conn.prepareStatement(sql)){
-//            stmt.setString(1, book.getIsbn());
-//            stmt.setString(2, book.getName());
-//            stmt.setString(3, book.getCategory());
-//            stmt.setString(4, book.getDescription());
-//            stmt.setString(5, book.getPage_number());
-//            stmt.setString(6, book.getYear());
-//            stmt.setString(7, book.getPrice());
-//            stmt.setString(8, book.getAuthor());
-//            stmt.setString(9, book.getReserved());
-//            stmt.setInt(10, Model.getInstance().getAuthorId(book.getAuthor()));
-//            stmt.setInt(11, book.getId());
-//
-//            int rowsUpdated = stmt.executeUpdate();
-//
-//            if(rowsUpdated > 0){
-//                logger.info("Book updated: " + book);
-//            }else{
-//                logger.warning("No book found with id: " + book.getId());
-//            }
-//        }catch (SQLException e){
-//            logger.severe("Error updating book: " + e.getMessage());
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public ObservableList<String> findBooksWithAuthors(){
-//        ObservableList<String> booksNamesAuthors = FXCollections.observableArrayList();
-//        String sql = "SELECT Name, Author FROM books";
-//
-//        try(PreparedStatement stmt = this.conn.prepareStatement(sql)){
-//            ResultSet resultSet = stmt.executeQuery();
-//            while(resultSet.next()){
-//                String name = resultSet.getString("Name");
-//                String author = resultSet.getString("Author");
-//                booksNamesAuthors.add(name + " - " + author);
-//            }
-//        }catch (SQLException e) {
-//            logger.severe("Error fetching bookNames and authors: " + e.getMessage());
-//        }
-//        return booksNamesAuthors;
-//    }
 
-    public void setReserved(Object entity, int bookId) {
-        if(!(entity instanceof Book)){
-            throw new IllegalArgumentException("Expected Book object");
-        }
-
-        Book book = (Book) entity;
-
-        String sql = "UPDATE handed_books SET Reserved = ? WHERE ID = ?";
+    public int retrieveBook_idFromHandedBook(int handedBookId) {
+        String sql = "SELECT Book_id FROM handed_books WHERE ID = ?";
+        int id = -1;
         try(PreparedStatement stmt = this.conn.prepareStatement(sql)){
-            stmt.setString(1, "Paimta");
-            stmt.setInt(2, bookId);
-
-            int rowsUpdated = stmt.executeUpdate();
-
-            if(rowsUpdated > 0){
-                logger.info("Reservation status set successfully: " + book);
-            }else{
-                logger.warning("No book found with id: " + book.getId());
+            stmt.setInt(1, handedBookId);
+            ResultSet resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+                id = resultSet.getInt("Book_id");
+            } else {
+                System.out.println("No Book_id found.");
             }
-        }catch (SQLException e){
-            logger.severe("Error error setting books reservation status: " + e.getMessage());
-            e.printStackTrace();
+        }catch (SQLException e) {
+            logger.severe("Error finding Book_id: " + e.getMessage());
         }
+        return id;
     }
-
-//    public ObservableList<String> findBooksWithAuthors(){
-//        ObservableList<String> booksNamesAuthors = FXCollections.observableArrayList();
-//        String sql = "SELECT Name, Author FROM books";
-//
-//        try(PreparedStatement stmt = this.conn.prepareStatement(sql)){
-//            ResultSet resultSet = stmt.executeQuery();
-//            while(resultSet.next()){
-//                String name = resultSet.getString("Name");
-//                String author = resultSet.getString("Author");
-//                booksNamesAuthors.add(name + " - " + author);
-//            }
-//        }catch (SQLException e) {
-//            logger.severe("Error fetching bookNames and authors: " + e.getMessage());
-//        }
-//        return booksNamesAuthors;
-//    }
 }

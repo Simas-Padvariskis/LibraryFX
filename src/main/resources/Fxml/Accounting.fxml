@@ -24,8 +24,9 @@
             <TableColumn fx:id="col_name" prefWidth="99.99996948242188" text="Pavadinimas" />
             <TableColumn fx:id="col_category" prefWidth="105.5999755859375" text="Kategorija" />
             <TableColumn fx:id="col_author" prefWidth="103.20001220703125" text="Autorius" />
-            <TableColumn fx:id="col_rezervation" prefWidth="117.60000610351562" text="Rezervacija" />
-            <TableColumn fx:id="col_return_time" prefWidth="231.20001220703125" text="Grąžinimo terminas" />
+            <TableColumn fx:id="col_rezervation" prefWidth="83.20004272460938" text="Rezervacija" />
+            <TableColumn fx:id="col_returned_date" prefWidth="137.59991455078125" text="Grąžinta" />
+            <TableColumn fx:id="col_return_time" prefWidth="121.60009765625" text="Grąžinti iki" />
          </columns>
          <contextMenu>
             <ContextMenu>

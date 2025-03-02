@@ -179,8 +179,8 @@ public class Model {
      * Create book
      */
 
-    public void createBook(String isbn, String name, String category, String description, String pageNumber, String year, String price, String author, String reserved){
-        booksDAO.create(isbn, name, category, description, pageNumber, year, price, author, reserved);
+    public void createBook(String isbn, String name, String category, String description, String pageNumber, String year, String price, String author){
+        booksDAO.create(isbn, name, category, description, pageNumber, year, price, author);
     }
 
     /**

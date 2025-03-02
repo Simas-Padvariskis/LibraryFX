@@ -12,7 +12,6 @@ public class Book {
     private StringProperty year;
     private StringProperty price;
     private StringProperty author;
-    private StringProperty reserved;
 
     /**
      * Book constructor
@@ -26,10 +25,9 @@ public class Book {
      * @param year - Book release year
      * @param price - Book price
      * @param author - Book author
-     * @param reserved - Book reservation status
      */
 
-    public Book(int id, String isbn, String name, String category, String description, String pageNumber, String year, String price, String author, String reserved) {
+    public Book(int id, String isbn, String name, String category, String description, String pageNumber, String year, String price, String author) {
         this.id = new SimpleIntegerProperty(id);
         this.isbn = new SimpleStringProperty(isbn);
         this.name = new SimpleStringProperty(name);
@@ -39,7 +37,6 @@ public class Book {
         this.year = new SimpleStringProperty(year);
         this.price = new SimpleStringProperty(price);
         this.author = new SimpleStringProperty(author);
-        this.reserved = new SimpleStringProperty(reserved);
     }
 
     public int getId() {
@@ -148,18 +145,6 @@ public class Book {
 
     public void setAuthor(String author) {
         this.author.set(author);
-    }
-
-    public String getReserved() {
-        return reserved.get();
-    }
-
-    public StringProperty reservedProperty() {
-        return reserved;
-    }
-
-    public void setReserved(String reserved) {
-        this.reserved.set(reserved);
     }
 
     @Override

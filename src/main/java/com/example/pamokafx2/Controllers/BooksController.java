@@ -73,7 +73,6 @@ public class BooksController implements Initializable {
         col_year.setCellValueFactory(new PropertyValueFactory<>("year"));
         col_price.setCellValueFactory(new PropertyValueFactory<>("price"));
         col_author.setCellValueFactory(new PropertyValueFactory<>("author"));
-        col_rezervation.setCellValueFactory(new PropertyValueFactory<>("reserved"));
     }
 
     /**

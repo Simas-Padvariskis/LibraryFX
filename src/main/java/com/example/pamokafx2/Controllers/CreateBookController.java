@@ -22,7 +22,6 @@ public class CreateBookController implements Initializable {
     public TextField description_field;
     public TextField page_number_field;
     public TextField price_field;
-    public TextField rezervation_field;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -40,18 +39,17 @@ public class CreateBookController implements Initializable {
         String year = year_field.getText();
         String price = price_field.getText();
         String author = authorChoice.getValue();
-        String rezervation = rezervation_field.getText();
 
         if (authorChoice.getItems().isEmpty()) {
             AlertUtility.displayInformation("Sistemoje nėra autorių");
         }else {
             //Create the book
 
-            if (isbn.isEmpty() || name.isEmpty() || category.isEmpty() || description.isEmpty() || pageNumber.isEmpty() || year.isEmpty() || price.isEmpty() || author == null || rezervation.isEmpty()) {
+            if (isbn.isEmpty() || name.isEmpty() || category.isEmpty() || description.isEmpty() || pageNumber.isEmpty() || year.isEmpty() || price.isEmpty() || author == null) {
                 AlertUtility.displayInformation("Užpildykite visus laukus");
             }
             else {
-                Model.getInstance().createBook(isbn, name, category, description, pageNumber, year, price, author, rezervation);
+                Model.getInstance().createBook(isbn, name, category, description, pageNumber, year, price, author);
                 AlertUtility.displayInformation("Knyga sėkmingai sukurta");
                 emptyFields();
             }
